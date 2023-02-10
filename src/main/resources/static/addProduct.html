@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:include="common.html :: source"></th:block>
+    <script type="text/javascript" src="/js/manager.js"></script>
+</head>
+<body>
+
+<th:block th:include="common.html :: header"></th:block>
+
+
+<div class="i_bg bg_color">
+    <div class="m_content">
+
+        <div class="m_left">
+            <div class="left_n">管理中心</div>
+            <div class="left_m">
+                <div class="left_m_t t_bg1">订单中心</div>
+                <ul>
+                    <li><a href="/orderDetail/allOrderList" >所有订单</a></li>
+                </ul>
+            </div>
+            <div class="left_m">
+                <div class="left_m_t t_bg2">管理中心</div>
+                <ul>
+                    <li><a href="/product/allProductList" >商品管理</a></li>
+                    <li><a href="#" >添加商品</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="add" action="/product/addProducts"  name="lineandstation" method="post">
+            <table border="0" style="width:420px; font-size:14px; margin-top:20px;" cellspacing="0" cellpadding="0">
+                <tr height="50">
+                    <td align="right">商品名&nbsp;</td>
+                    <td><input type="text" value="" name="productName"/></td>
+                </tr>
+                <tr height="50">
+                    <td align="right">&nbsp;商品描述 &nbsp;</td>
+                    <td><input type="text" value="" name="Description"/></td>
+                </tr>
+                <tr height="50">
+                    <td align="right">&nbsp;价格 &nbsp;</td>
+                    <td><input type="text" value="" name="price"/></td>
+                </tr>
+                <tr height="50">
+                    <td align="right">&nbsp;库存 &nbsp;</td>
+                    <td><input type="text" value="" name="stock"/></td>
+                </tr>
+                <tr height="50">
+                    <td align="right">&nbsp;类型 &nbsp;</td>
+                    <td>
+                        <select name="lines" id="lines" onchange="getStationName()">
+                            <option value="0">请选择一级分类</option>
+                        </select>
+                        <select name="station">
+                            <option value="0">请选择二级分类</option>
+                        </select>
+                    </td>
+                </tr>
+
+
+                <tr height="50">
+                    <td align="right">&nbsp;图片 &nbsp;</td>
+                    <td><input type="file" value="" name="ImgValue"/></td>
+                </tr>
+
+                <tr height="60">
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="录入商品" class="log_btn" onclick="register()"/></td>
+                </tr>
+            </table>
+        </form>
+
+<!--        <form name="lineandstation">-->
+<!--            一级分类选择:-->
+<!--            <select name="lines" id="lines" onchange="getStationName()">-->
+<!--                <option value="0">请选择一级分类</option>-->
+<!--            </select>-->
+<!--            二级分类选择：-->
+<!--            <select name="station">-->
+<!--                <option value="0">请选择二级分类</option>-->
+<!--            </select>-->
+
+<!--        </form>-->
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<th:block th:include="common.html :: footer"></th:block>
+<th:block th:include="common.html :: permit"></th:block>
+
+</body>
+
+<script type="text/javascript">
+    var lineNum = ["化妆品", "家用商品", "进口食品", "电子商品", "保健食品", "箱包"];
+    var collect = document.getElementById("lines")
+    var old = collect.innerHTML
+    function load() {
+        var lineNu = "";
+        for (var j = 0; j < lineNum.length; j++) {
+            lineNu += '<option>' + lineNum[j] + '</option>';
+        }
+        collect.innerHTML = old + lineNu;
+    } //网页加载时执行此函数，为线路选择框动态添加选项
+    load();
+    var stationName = [
+        ["面部护理"],
+        ["餐具","卫具","客厅专用"],
+        ["零食/糖果/巧克力"],
+        ["手机","手环","电脑"],
+        ["老年保健品","中年营养品","儿童保健品"],
+        ["旅行箱","手提箱"]
+    ];
+
+    function getStationName() {
+        var line_num = document.lineandstation.lines;
+        var station_name = document.lineandstation.station;
+        var lineStation = stationName[line_num.selectedIndex - 1];
+        station_name.length = 1;
+        for (var i = 0; i < lineStation.length; i++) {
+            station_name[i + 1] = new Option(lineStation[i], lineStation[i]);
+        }
+    } //为站点选择框根据线路选择框的值动态添加选项
+
+
+
+
+</script>
+
+
+</html>
+
+

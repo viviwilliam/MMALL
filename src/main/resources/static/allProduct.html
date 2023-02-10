@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:include="common.html :: source"></th:block>
+    <script type="text/javascript" src="/js/manager.js"></script>
+    <style>
+        .black_overlay{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1001;
+            -moz-opacity: 0.8;
+            opacity:.80;
+            filter: alpha(opacity=88);
+        }
+        .white_content {
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 40%;
+            width: 55%;
+            height: 55%;
+            padding: 20px;
+            border: 10px solid orange;
+            background-color: white;
+            z-index:1002;
+            overflow: auto;
+        }
+    </style>
+
+</head>
+<body>
+
+<th:block th:include="common.html :: header"></th:block>
+
+
+<div class="i_bg bg_color">
+    <div class="m_content">
+
+        <div class="m_left">
+            <div class="left_n">管理中心</div>
+            <div class="left_m">
+                <div class="left_m_t t_bg1">订单中心</div>
+                <ul>
+                    <li><a href="/orderDetail/allOrderList" >所有订单</a></li>
+                </ul>
+            </div>
+            <div class="left_m">
+                <div class="left_m_t t_bg2">管理中心</div>
+                <ul>
+                    <li><a href="#" >商品管理</a></li>
+                </ul>
+                <ul>
+                    <li><a href="/product/addProduct" >添加商品</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="m_right" id="content">
+            <p></p>
+            <p></p>
+            <div class="mem_tit">商品列表</div>
+            <table border="0" class="order_tab"
+                   style="width: 930px; text-align: center; margin-bottom: 30px;"
+                   cellspacing="0" cellpadding="0">
+                <tbody>
+<!--                <button onclick="ck();">-->
+<!--                    click-->
+<!--                </button>-->
+                <div>
+
+                    <tr>
+                        <td class="td_bg" >商品名称</td>
+                        <td class="td_bg" >商品描述</td>
+                        <td class="td_bg" >价格</td>
+                        <td class="td_bg" >库存</td>
+<!--                        <td class="td_bg" >图片</td>-->
+                        <td class="td_bg" >操作</td>
+                        <td class="td_bg" >操作</td>
+                    </tr>
+
+                    <tr class="td_bg" th:each="product:${products}">
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.description}"></td>
+                        <td th:text="${product.price}"></td>
+                        <td th:text="${product.stock}"></td>
+                        <td>
+                            <a th:href="'/product/deleteById/'+${product.getId()}" th:text="下架"></a>
+                        </td>
+                        <td>
+                            <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">修改</a>
+                            <div id="light" class="white_content">
+                                <form id="add" action="/product/changeProducts"  name="lineandstation" method="post">
+                                    <table border="0" style="width:420px; font-size:14px; margin-top:20px;" cellspacing="0" cellpadding="0">
+                                        <tr height="50">
+                                            <td align="right">商品名&nbsp;</td>
+                                            <td><input type="text" value="" name="productName"/></td>
+                                        </tr>
+                                        <tr height="50">
+                                            <td align="right">&nbsp;商品描述 &nbsp;</td>
+                                            <td><input type="text" value="" name="Description"/></td>
+                                        </tr>
+                                        <tr height="50">
+                                            <td align="right">&nbsp;价格 &nbsp;</td>
+                                            <td><input type="text" value="" name="price"/></td>
+                                        </tr>
+                                        <tr height="50">
+                                            <td align="right">&nbsp;库存 &nbsp;</td>
+                                            <td><input type="text" value="" name="stock"/></td>
+                                        </tr>
+
+                                        <tr height="60">
+                                            <td></td>
+                                            <td><input type="submit" value="提交修改" class="log_btn" onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'"/><td>
+
+                                        </tr>
+                                    </table>
+                                </form>
+                        <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">关闭</a>
+                            </div>
+                            <div id="fade" class="black_overlay"></div>
+                        </td>
+
+                    </tr>
+                </div>
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:include="common.html :: footer"></th:block>
+<th:block th:include="common.html :: permit"></th:block>
+
+</body>
+
+</html>
